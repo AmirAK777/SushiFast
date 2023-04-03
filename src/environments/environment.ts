@@ -1,5 +1,5 @@
 export const environment = {
-    production: false,
-    apiBaseUrl: 'http://localhost:8080/api/boxes/',
-    apiImage: 'http://localhost:8080/api/image/',
-  };
+  production: false,
+  apiBaseUrl: 'https://quizbe.org/api/boxes/',
+  apiImage: 'https://quizbe.org/api/image/',
+};
