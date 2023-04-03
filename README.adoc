@@ -20,7 +20,7 @@ Les données sont récupérées depuis une API pour assurer l'actualité des inf
 == Liens
 
 * Le lien vers votre dépôt distant
-** https://github.com/AmirAK777/SushiFast
+** https://amirak777.github.io/SushiFast/
 
 * Le lien de L'Api
 ** https://quizbe.org/api/
