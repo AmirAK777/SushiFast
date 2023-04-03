@@ -1,0 +1,51 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-8">
+      <h1>Panier</h1>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Image</th>
+            <th>Nom</th>
+            <th>Prix</th>
+            <th>Quantité</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let box of boxPanier">
+            <td><img [src]="getImage(box.image)" alt="Box Image"></td>
+            <td>{{ box.nom }}</td>
+            <td>{{ box.prix }} €</td>
+            <td>{{ box.qte }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <button (click)="commander()" class="btn btn-primary">Commander</button>
+    </div>
+    <div class="col-md-4">
+      <h1>Récapitulatif de commande</h1>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Article</th>
+            <th>Quantité</th>
+            <th>Prix unitaire</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let article of commande.details">
+            <td>{{ article.nom }}</td>
+            <td>{{ article.quantite }}</td>
+            <td>{{ article.prixUni }}</td>
+          
+
+          </tr>
+          <tr>
+            <td colspan="3" class="text-right"><strong>Prix Total :</strong></td>
+            <td><strong>{{ total() }} €</strong></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

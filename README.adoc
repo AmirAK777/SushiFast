@@ -1,0 +1,295 @@
+= Projet : SushiFast
+:author:  Amir Katsiev
+:docdate: 02-04-2023
+:asciidoctor-version:1.1
+:description: App de vente de Box Sushi
+:icons: font
+:listing-caption: Listing
+:toc-title: Table des matières
+:toc-placement: preamble
+:toc: left
+:toclevels: 4
+
+Readme 02/04/2023 Amir Katsiev
+
+== SushiFast
+
+Une application Angular pour commander des boxes de nourriture en ligne, avec une variété d'options à choisir.
+Les données sont récupérées depuis une API pour assurer l'actualité des informations
+
+== Liens
+
+* Le lien vers votre dépôt distant
+** https://github.com/AmirAK777/SushiFast
+
+* Le lien de L'Api
+** https://quizbe.org/api/
+
+== Conditions préalables
+
+* Un compte GitHub
+
+* Node.js et Git
+
+* https://code.visualstudio.com/[Visual Studio] installé
+
+* https://www.jetbrains.com/fr-fr/idea/[IntelliJ IDEA] installé (Si vous utilisez votre propre API)
+
+== Configuration
+
+Si vous souhaitez connecter votre boutique à cet exemple, ouvrez `+/src/environments/environment.ts+` et `+/src/environments/environment.prod.ts+`, mettez à jour l' en-tête `+apiBaseUrl+` et `+apiImage+` :
+
+[source,TypeScript]
+----
+export const environment = {
+    production: false,
+    apiBaseUrl: 'http://localhost:8080/api/boxes/',
+    apiImage: 'http://localhost:8080/api/image/',
+  };
+----
+
+== Serveur de développement
+
+Exécuter `ng serve` pour un serveur de développement.
+Accédez à `http://localhost:4200/`.
+L'application se rechargera automatiquement si vous modifiez l'un des fichiers source.
+
+== Diagramme de cas d’utilisation
+
+Voici le diagramme des cas d’utilisations concernant l’application JS cliente qui représente les différentes façons dont un utilisateur peut interagir avec le système.
+
+
+image::src\assets\images\degUtil.png[]
+
+
+<<<<
+
+== Diagramme de déploiement
+
+Voici le diagramme de déploiement présentant les différents tiers participants à la solution qui montre l'architecture d'exécution du système.
+
+image::src\assets\images\diagDep.png[]
+
+
+
+* L'acteur client (utilisateur) utilise un navigateur web pour accéder à l'application.
+* Le navigateur web utilise le stockage local (localStorage) pour stocker temporairement des données côté client.
+* Le navigateur web exécute une application Angular, qui est un framework de développement web côté client.
+Cette application Angular communique avec l'API du serveur distant pour récupérer ou mettre à jour des données.
+* Le navigateur web communique avec un serveur HTTP pour récupérer les fichiers de l'application web (par exemple, HTML, CSS, JavaScript) lorsqu'il accède à l'application.
+
+== Fichier JSON des commandes
+
+[source,JSON]
+----
+
+[
+   {
+      "numeroCommande":1680442275826,
+      "prixFinal":53.4,
+      "details":[
+         {
+            "nom":"Tasty Blend",
+            "quantite":3,
+            "prixUni":12.5
+         },
+         {
+            "nom":"Amateur Mix",
+            "quantite":1,
+            "prixUni":15.9
+         }
+      ],
+      "date":"02/04/2023"
+   },
+   {
+      "numeroCommande":1680442282142,
+      "prixFinal":138.6,
+      "details":[
+         {
+            "nom":"Tasty Blend",
+            "quantite":3,
+            "prixUni":12.5
+         },
+         {
+            "nom":"Amateur Mix",
+            "quantite":4,
+            "prixUni":15.9
+         },
+         {
+            "nom":"Saumon Original",
+            "quantite":3,
+            "prixUni":12.5
+         }
+      ],
+      "date":"02/04/2023"
+   }
+]
+
+----
+
+* Voici la structure de la commande en fichier JSON.
+** Chaque commande compose :
+
+
+*** Un numero pour identifier la commande.
+*** Le prix total et le details des boxes commandées.
+*** Details des boxes commandées.
+*** Une date de la commande.
+
+= Politique de confidentialité
+
+[discrete]
+Cette politique de confidentialité décrit la manière dont nous collectons, utilisons et protégeons les informations personnelles que vous nous fournissez lorsque vous commandez des boxes de sushi en ligne.
+
+[discrete]
+## Collecte d'informations personnelles
+
+[discrete]
+Nous collectons les informations personnelles suivantes lorsque vous passez une commande : votre nom, votre adresse, votre numéro de téléphone, votre adresse e-mail, les détails de votre commande (articles commandés, quantités, options de personnalisation, prix et instructions spéciales), les informations de paiement (numéro de carte de crédit et date d'expiration), les informations de livraison (adresse de livraison et instructions spéciales), ainsi que des données de navigation et de comportement sur notre site.
+
+[discrete]
+## Utilisation des informations personnelles
+
+[discrete]
+Nous utilisons les informations personnelles que nous collectons uniquement pour traiter votre commande, répondre à vos demandes et améliorer nos services.
+Nous ne partageons pas ces informations avec des tiers à des fins commerciales.
+
+[discrete]
+## Protection des informations personnelles
+
+[discrete]
+Nous prenons des mesures pour protéger les informations personnelles que vous nous fournissez contre tout accès non autorisé ou toute utilisation abusive.
+
+[discrete]
+## Contact
+
+[discrete]
+Si vous avez des questions ou des préoccupations concernant cette politique de confidentialité, veuillez nous contacter à l'adresse suivante : [votre adresse e-mail].
+
+== Exemple de sélection de copies écran
+
+[discrete]
+Ci-dessous, vous trouverez une sélection de copies écran de notre application de commande de boxes de sushi en ligne, ainsi que des commentaires expliquant la relation entre le code source et l'UI.
+
+=== Page d'accueil
+
+image::src\assets\images\acceuil.png[]
+
+[discrete]
+La page d'accueil affiche une liste de nos boxes de sushi les plus populaires.
+Cette liste est générée dynamiquement à partir d'une requête API qui récupère les données de nos boxes de sushi depuis notre base de données.
+
+
+[source,js]
+----
+  ngOnInit() {
+    this.lookUpService.getBoxes().subscribe((boxes: Box[]) => { <1>
+      this.boxes = boxes;
+      console.log(boxes) <2>
+      this.lookUpService.send_data.next(this.panierBox) <3>
+    });
+    this.route.queryParams.subscribe(params => { <4>
+      this.message = params['message'];
+    });
+
+  }
+----
+
+<1> Appel à la méthode getBoxes() du service lookUpService, avec une fonction callback prenant en paramètre un tableau d'objets de type Box
+<2> Affichage du contenu du tableau boxes dans la console du navigateur
+<3> Envoi d'une donnée (this.panierBox) via un observable send_data du service lookUpService
+<4> Souscription à un observable sur les paramètres de l'URL de la page, afin de récupérer la valeur de message s'il est présent
+
+=== Page de commande
+
+image::src\assets\images\panier.png[]
+
+[discrete]
+La page de commande permet à l'utilisateur de sélectionner les boxes de sushi qu'il souhaite commander, ainsi que de personnaliser certains aspects de sa commande (comme la quantité, les options de personnalisation et les instructions spéciales).
+Les données de la commande sont stockées dans la mémoire locale du navigateur à l'aide de la bibliothèque Angular LocalStorage.
+
+=== Code source de la page de commande
+
+[source,js]
+----
+ ngOnInit() {
+    const dates = new Date()<1>
+    if (this.boxPanier) {
+      this.produits = this.boxPanier.map((box: any) => ({ <2>
+        nom: box.nom,
+        prix: box.prix,
+        qte: box.qte,
+        prixTotal: box.prix * box.qte
+      }));
+
+
+      const numeroCommande = new Date().getTime();  <3>
+      this.commande = {  <4>
+        numeroCommande,
+        prixFinal: this.total(),
+        details: this.produits.map((article: any) => ({
+          nom: article.nom,
+          quantite: article.qte,
+          prixUni: article.prix
+        })),
+        date: new Date().toLocaleDateString()
+      };
+
+ commander(){
+
+    // Enregistrer la commande dans le stockage local
+    let commandes: any[] = []; <5>
+
+    if (localStorage.getItem('commandes')) { <6>
+      commandes = JSON.parse(localStorage.getItem('commandes') as string);
+    }
+
+    commandes.push(this.commande);  <7>
+    localStorage.setItem('commandes', JSON.stringify(commandes));
+
+
+  }
+}
+
+----
+
+<1> Crée une nouvelle instance de la classe Date.
+<2> Map la propriété boxPanier pour créer un objet produits qui contient les détails des articles commandés.
+<3> Génère un numéro de commande unique en utilisant la méthode getTime() de l'objet Date.
+<4> Crée un objet commande qui contient les détails de la commande, y compris le numéro de commande, le prix total, les détails des articles commandés et la date de la commande.
+<5>  On déclare une variable 'commandes' comme un tableau vide pour stocker les commandes.
+<6>  On vérifie si le stockage local contient déjà des commandes en utilisant la méthode 'getItem' de l'objet 'localStorage'. Si oui, on les récupère dans la variable 'commandes'.
+<7>  On utilise la méthode 'JSON.parse' pour convertir les données de chaîne de caractères stockées dans le stockage local.
+
+[discrete]
+Le code source de la page de commande utilise la bibliothèque Angular HttpClient pour récupérer les données des commandes depuis notre API.
+Lorsque l'utilisateur passe une commande, les données de la commande sont ajoutées à la mémoire locale du navigateur à l'aide de la méthode setItem de l'objet localStorage.
+Enfin, une alerte de confirmation est affichée et l'utilisateur est redirigé vers la page d'accueil.
+
+
+= Liste d'événements redoutés et contre-mesures en sécurité informatique
+
+==== Défaillance de la sécurité liée à une mise à jour
+
+Description: Les mises à jour logicielles sont importantes pour maintenir la sécurité d'un système informatique en corrigeant les vulnérabilités et en introduisant de nouvelles fonctionnalités. Cependant, une mise à jour mal appliquée peut entraîner une défaillance de la sécurité du système et rendre ce dernier vulnérable aux attaques.
+
+* Test rigoureux avant la mise à jour :
+
+** Avant de déployer une mise à jour, il est essentiel de la tester rigoureusement dans un environnement de test pour s'assurer qu'elle fonctionne correctement et ne provoque pas de problèmes de sécurité. Cela permet d'identifier les éventuelles incompatibilités ou erreurs de configuration qui pourraient mettre en danger la sécurité du système.
+* Réduction de la surface d'attaque  :
+
+** En réduisant la surface d'attaque, en limitant le nombre de points d'entrée possibles pour un attaquant, on peut minimiser les risques liés à une mise à jour mal appliquée. Cela peut être réalisé en mettant en œuvre des mécanismes de contrôle d'accès, en appliquant le principe du moindre privilège, en configurant correctement les pare-feu et en limitant les ports ouverts.
+
+==== Compromission d'un système par une ligne de commande malveillante
+
+Une interface en ligne de commande est une interface homme-machine dans laquelle la communication entre l'utilisateur et l'ordinateur s'effectue en mode texte. Si un utilisateur malveillant parvient à compromettre un système en utilisant une ligne de commande malveillante, il peut prendre le contrôle de l'ensemble du système. Pour se prémunir contre cette menace, il est possible de mettre en place les contre-mesures suivantes :
+
+* Principe de moindre privilège :
+** en limitant les permissions accordées aux éléments et acteurs du système, il est possible de limiter les conséquences d'une compromission. En effet, un attaquant ne pourra pas altérer ou détruire des données s'il n'a pas les permissions nécessaires pour le faire.
+
+* Réduction de la surface d'attaque :
+** en réduisant le nombre d'éléments distincts du SI et en éliminant les vulnérabilités exploitables, il est possible de limiter les risques d'attaques. En réduisant la surface d'attaque, il devient plus difficile pour un attaquant de compromettre un système en utilisant une ligne de commande malveillante.
+
+== Conclusion
+
+En conclusion, l'application SushiFast est un exemple de l'utilisation de données provenant d'une API pour construire dynamiquement une interface utilisateur. En utilisant des requêtes HTTP pour récupérer les données du menu des boxes, l'application est en mesure de présenter les choix de menu à l'utilisateur en temps réel. De plus, en sauvegardant les commandes dans le stockage local du navigateur.

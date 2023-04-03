@@ -1,0 +1,41 @@
+<div *ngIf="selectedBox" class="modal">
+  <div class="modal-content">
+    <span class="close" (click)="selectedBox=null">&times;</span>
+    <h3>Détails de {{selectedBox.nom}}</h3>
+    <p>Saveurs de la box{{selectedBox.saveurs}}
+    <p>
+      <p>{{ message }}</p>
+    <div class="col-md-4" *ngFor="let aliment of selectedBox.aliments">
+      <p>{{aliment.nom}}</p>
+      <p>{{aliment.quantite}}</p>
+
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h1>Boxes disponibles</h1>
+      <hr>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4" *ngFor="let box of boxes">
+      <div class="card">
+        <img class="card-img-top" [src]="getImage(box.image)" alt="Box Image">
+        <div class="card-body">
+          <h4 class="card-title">{{ box.nom }}</h4>
+          <p class="card-text">{{ box.pieces }} pièces</p>
+          <p class="card-text">{{ box.prix }} €</p>
+         <button class="btn btn-outline-info" (click)="showDetails(box)">Détails</button>
+         <button class="btn btn-outline-info" (click)="addPanier(box)">Ajouter</button>
+        </div>  
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="selectedBox">
+  <h3>Détails de {{selectedBox.nom}}</h3>
+
+</div>
