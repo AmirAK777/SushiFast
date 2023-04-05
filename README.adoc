@@ -10,7 +10,7 @@
 :toc: left
 :toclevels: 4
 
-Readme 02/04/2023 Amir Katsiev
+Readme 02/04/2023 MANSOUR Yannis , NAMOUNE Ryad , FONTAINE Nathanel, Amir Katsiev
 
 == SushiFast
 
